@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>坦克大战（浏览器版）</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="title">
+            <div class="name">坦克大战</div>
+            <div class="sub">WASD 移动 · ←→ 转向 · 空格开火 · P 暂停</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="btnRestart" class="btn primary" type="button">重新开始</button>
+          <button id="btnPause" class="btn" type="button">暂停</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="panel">
+          <div class="hud">
+            <div class="hudItem">
+              <div class="label">生命</div>
+              <div id="hudLives" class="value">3</div>
+            </div>
+            <div class="hudItem">
+              <div class="label">得分</div>
+              <div id="hudScore" class="value">0</div>
+            </div>
+            <div class="hudItem">
+              <div class="label">关卡</div>
+              <div id="hudLevel" class="value">1</div>
+            </div>
+            <div class="hudItem">
+              <div class="label">敌人</div>
+              <div id="hudEnemies" class="value">0</div>
+            </div>
+          </div>
+
+          <div class="canvasWrap">
+            <canvas id="game" width="960" height="640" aria-label="坦克大战画布"></canvas>
+            <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+              <div class="overlayCard">
+                <div id="overlayTitle" class="overlayTitle">坦克大战</div>
+                <div id="overlayText" class="overlayText">
+                  按 <b>Enter</b> 开始。WASD 移动，左右键转向，空格开火。
+                </div>
+                <div class="overlayActions">
+                  <button id="btnStart" class="btn primary" type="button">开始游戏</button>
+                  <button id="btnHow" class="btn" type="button">操作说明</button>
+                </div>
+                <div id="how" class="how hidden">
+                  <div class="howGrid">
+                    <div class="k">W / S</div><div class="v">前进 / 后退</div>
+                    <div class="k">A / D</div><div class="v">平移（小幅）</div>
+                    <div class="k">← / →</div><div class="v">炮塔与车身转向</div>
+                    <div class="k">Space</div><div class="v">发射炮弹</div>
+                    <div class="k">P</div><div class="v">暂停 / 继续</div>
+                    <div class="k">R</div><div class="v">重新开始</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip">
+            规则：砖墙可打碎，钢墙不可破坏；消灭全部敌人过关；生命为 0 则失败。
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
