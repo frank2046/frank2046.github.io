@@ -132,18 +132,21 @@ canvas#game{
 }
 
 .mobileControls{
-  position:absolute;
-  inset:auto 18px 18px 18px;
-  display:flex;
+  display:none;
   justify-content:space-between;
   align-items:flex-end;
-  pointer-events:none;
+  gap:14px;
+  padding: 12px 14px 16px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(12,19,42,.30), rgba(12,19,42,.44));
 }
 .mobileControls .mc-left,
 .mobileControls .mc-right{
   display:flex;
   gap:14px;
-  pointer-events:auto;
+}
+.touch .mobileControls{
+  display:flex;
 }
 .mc-dpad{
   display:flex;

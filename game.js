@@ -78,6 +78,7 @@
   function bindVirtualButtons() {
     const container = document.getElementById("mobileControls");
     if (!container || !isTouchDevice()) return;
+    document.documentElement.classList.add("touch");
 
     const btns = container.querySelectorAll("[data-key]");
     btns.forEach((btn) => {
