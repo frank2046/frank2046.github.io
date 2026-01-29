@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>坦克大战（浏览器版）</title>
+    <title>范旭的坦克大战</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -12,7 +12,7 @@
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <div class="title">
-            <div class="name">坦克大战</div>
+            <div class="name">范旭的坦克大战</div>
             <div class="sub">WASD 移动 · ←→ 转向 · 空格开火 · P 暂停</div>
           </div>
         </div>
@@ -44,16 +44,18 @@
           </div>
 
           <div class="canvasWrap">
-            <canvas id="game" width="960" height="640" aria-label="坦克大战画布"></canvas>
+            <canvas id="game" width="960" height="640" aria-label="范旭的坦克大战画布"></canvas>
             <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
               <div class="overlayCard">
-                <div id="overlayTitle" class="overlayTitle">坦克大战</div>
+                <div id="overlayTitle" class="overlayTitle">范旭的坦克大战</div>
                 <div id="overlayText" class="overlayText">
-                  按 <b>Enter</b> 开始。WASD 移动，左右键转向，空格开火。
+                  电脑：按 <b>Enter</b> 开始，使用 WASD / ←→ / 空格 操作。<br />
+                  手机：点击屏幕下方虚拟按键控制坦克移动与开火。
                 </div>
                 <div class="overlayActions">
                   <button id="btnStart" class="btn primary" type="button">开始游戏</button>
                   <button id="btnHow" class="btn" type="button">操作说明</button>
+                  <button id="btnOverlayRestart" class="btn hidden" type="button">重新开始</button>
                 </div>
                 <div id="how" class="how hidden">
                   <div class="howGrid">
@@ -65,6 +67,41 @@
                     <div class="k">R</div><div class="v">重新开始</div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div id="mobileControls" class="mobileControls" aria-hidden="true">
+              <div class="mc-left">
+                <div class="mc-dpad">
+                  <button class="mc-btn mc-dir" data-key="w">↑</button>
+                  <div class="mc-mid">
+                    <button class="mc-btn mc-dir" data-key="a">←</button>
+                    <button class="mc-btn mc-dir" data-key="s">↓</button>
+                    <button class="mc-btn mc-dir" data-key="d">→</button>
+                  </div>
+                </div>
+                <div class="mc-rotate">
+                  <button class="mc-btn mc-rot" data-key="ArrowLeft">⟲</button>
+                  <button class="mc-btn mc-rot" data-key="ArrowRight">⟳</button>
+                </div>
+              </div>
+              <div class="mc-right">
+                <button
+                  class="mc-btn mc-fire"
+                  data-key=" "
+                  type="button"
+                  aria-label="开火"
+                >
+                  ●
+                </button>
+                <button
+                  id="btnMobilePause"
+                  class="mc-btn mc-pause"
+                  type="button"
+                  aria-label="暂停或继续"
+                >
+                  II
+                </button>
               </div>
             </div>
           </div>

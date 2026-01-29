@@ -8,6 +8,8 @@
   const btnPause = document.getElementById("btnPause");
   const btnStart = document.getElementById("btnStart");
   const btnHow = document.getElementById("btnHow");
+  const btnOverlayRestart = document.getElementById("btnOverlayRestart");
+  const btnMobilePause = document.getElementById("btnMobilePause");
 
   const overlay = document.getElementById("overlay");
   const overlayTitle = document.getElementById("overlayTitle");
@@ -66,6 +68,39 @@
   btnPause.addEventListener("click", togglePause);
   btnStart.addEventListener("click", startGame);
   btnHow.addEventListener("click", () => how.classList.toggle("hidden"));
+  if (btnMobilePause) btnMobilePause.addEventListener("click", togglePause);
+  if (btnOverlayRestart) btnOverlayRestart.addEventListener("click", restartAndStart);
+
+  function isTouchDevice() {
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  }
+
+  function bindVirtualButtons() {
+    const container = document.getElementById("mobileControls");
+    if (!container || !isTouchDevice()) return;
+
+    const btns = container.querySelectorAll("[data-key]");
+    btns.forEach((btn) => {
+      const key = btn.getAttribute("data-key");
+      if (!key) return;
+
+      const press = (ev) => {
+        ev.preventDefault();
+        KEYS.add(key);
+        btn.classList.add("is-active");
+      };
+      const release = (ev) => {
+        ev.preventDefault();
+        KEYS.delete(key);
+        btn.classList.remove("is-active");
+      };
+
+      btn.addEventListener("pointerdown", press);
+      btn.addEventListener("pointerup", release);
+      btn.addEventListener("pointercancel", release);
+      btn.addEventListener("pointerleave", release);
+    });
+  }
 
   const TILE = 32;
   const COLORS = {
@@ -244,6 +279,11 @@
     overlay.classList.toggle("hidden", !visible);
   }
 
+  function setOverlayRestartVisible(visible) {
+    if (!btnOverlayRestart) return;
+    btnOverlayRestart.classList.toggle("hidden", !visible);
+  }
+
   function syncHud() {
     hudLives.textContent = String(state.lives);
     hudScore.textContent = String(state.score);
@@ -272,7 +312,13 @@
     }
     state.mode = "running";
     setOverlay(false, "", "");
+    setOverlayRestartVisible(false);
     syncHud();
+  }
+
+  function restartAndStart() {
+    restart();
+    startGame();
   }
 
   function restart() {
@@ -283,9 +329,10 @@
     resetWorld();
     setOverlay(
       true,
-      "坦克大战",
-      '按 <b>Enter</b> 开始。WASD 移动，左右键转向，空格开火。'
+      "范旭的坦克大战",
+      '电脑：按 <b>Enter</b> 开始，使用 WASD / ←→ / 空格 操作。<br />手机：使用屏幕下方虚拟按键控制坦克移动与开火。'
     );
+    setOverlayRestartVisible(false);
     syncHud();
   }
 
@@ -293,9 +340,11 @@
     if (state.mode === "running") {
       state.mode = "paused";
       setOverlay(true, "已暂停", "按 <b>P</b> 继续，或点击上方按钮。");
+      setOverlayRestartVisible(false);
     } else if (state.mode === "paused") {
       state.mode = "running";
       setOverlay(false, "", "");
+      setOverlayRestartVisible(false);
     }
     syncHud();
   }
@@ -493,8 +542,9 @@
               setOverlay(
                 true,
                 "失败",
-                `你的坦克被击毁。得分 <b>${state.score}</b>。按 <b>Enter</b> 再来一局。`
+                `你的坦克被击毁。得分 <b>${state.score}</b>。<br />按 <b>Enter</b> 或点击下方 <b>重新开始</b>。`
               );
+              setOverlayRestartVisible(true);
             } else {
               // respawn position
               p.x = 96;
@@ -552,8 +602,9 @@
       setOverlay(
         true,
         "胜利！",
-        `你消灭了所有敌人。得分 <b>${state.score}</b>。按 <b>Enter</b> 重新开始。`
+        `你消灭了所有敌人。得分 <b>${state.score}</b>。<br />按 <b>Enter</b> 或点击下方 <b>重新开始</b>。`
       );
+      setOverlayRestartVisible(true);
     }
     syncHud();
   }
@@ -753,5 +804,6 @@
 
   // init
   restart();
+  bindVirtualButtons();
   requestAnimationFrame(frame);
 })();
