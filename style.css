@@ -134,7 +134,7 @@ canvas#game{
 .mobileControls{
   position:absolute;
   inset:auto 18px 18px 18px;
-  display:none;
+  display:flex;
   justify-content:space-between;
   align-items:flex-end;
   pointer-events:none;
@@ -250,10 +250,4 @@ canvas#game{
 @media (max-width: 720px){
   .hud{grid-template-columns: repeat(2, minmax(0, 1fr))}
   .title .sub{display:none}
-}
-
-@media (hover: none) and (pointer: coarse){
-  .mobileControls{
-    display:flex;
-  }
 }
